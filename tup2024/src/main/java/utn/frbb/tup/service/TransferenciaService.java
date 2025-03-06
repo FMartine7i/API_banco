@@ -49,10 +49,10 @@ public class TransferenciaService {
             // se realiza la transferencia dentro del banco
             if (cuentaOrigen.getSaldo() < monto) throw new MontoInsuficienteException("Cuenta: " + cuentaOrigen.getNroAsociado());
             cuentaDestino.setSaldo(cuentaDestino.getSaldo() + monto);
-            cuentaDAO.save(cuentaDestino);
+            cuentaDAO.update(cuentaDestino);
         }
         cuentaOrigen.setSaldo(cuentaOrigen.getSaldo() - monto);
-        cuentaDAO.save(cuentaOrigen);
+        cuentaDAO.update(cuentaOrigen);
         LocalDateTime fecha = LocalDateTime.now();
         long nroAsociado = (cuentaDestino != null) ? cuentaDestino.getNroAsociado() : nroDestino;
         Movimiento transferencia = new Transferencia(cuentaOrigen.getNroAsociado(), nroAsociado, fecha, moneda, descripcion, esExterna, monto);

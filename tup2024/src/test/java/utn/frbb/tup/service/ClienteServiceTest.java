@@ -39,13 +39,21 @@ public class ClienteServiceTest {
 
     @Test
     public void testClienteSuccess() throws ClienteAlreadyExistsException{
-        Cliente cliente = new Cliente();
-        cliente.setFechaNacimiento(LocalDate.of(1998, 10, 5));
-        cliente.setNombre("Fede");
-        cliente.setApellido("Martinetti");
-        cliente.setDni(22888773);
-        cliente.setTipoPersona(TipoPersona.FISICA);
-        verify(clienteDAO, times(1)).save(cliente);
+        ClienteRequestDTO clienteDTO = new ClienteRequestDTO();
+        clienteDTO.setFechaNacimiento(LocalDate.of(1998, 10, 5));
+        clienteDTO.setNombre("Fede");
+        clienteDTO.setApellido("Martinetti");
+        clienteDTO.setDni(2288773);
+        clienteDTO.setTipoPersona(TipoPersona.FISICA);
+        clienteService.agregarCliente(clienteDTO);
+
+        Cliente clienteEsperado = new Cliente();
+        clienteEsperado.setFechaNacimiento(clienteDTO.getFechaNacimiento());
+        clienteEsperado.setNombre(clienteDTO.getNombre());
+        clienteEsperado.setApellido(clienteDTO.getApellido());
+        clienteEsperado.setDni(clienteDTO.getDni());
+        clienteEsperado.setTipoPersona(clienteDTO.getTipoPersona());
+        verify(clienteDAO, times(1)).save(any(Cliente.class));
     }
 
     @Test

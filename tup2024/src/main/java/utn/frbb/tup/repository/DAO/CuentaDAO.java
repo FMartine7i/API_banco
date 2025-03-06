@@ -51,14 +51,9 @@ public class CuentaDAO {
     }
 
     public void update(Cuenta cuenta) {
-        String sqlQuery = "UPDATE CUENTAS tipo = ?, saldo = ?, moneda = ?";
+        String sqlQuery = "UPDATE CUENTAS SET saldo = ?";
         try {
-            int rowsAffected = jdbcTemplate.update(sqlQuery,
-                    cuenta.getTipoCuenta().getDescripcion(),
-                    cuenta.getSaldo(),
-                    cuenta.getTipoMoneda().getDescripcion()
-            );
-            logger.debug("CuentaService agregada con éxito a la tabla.");
+            int rowsAffected = jdbcTemplate.update(sqlQuery, cuenta.getSaldo());
             if (rowsAffected == 0) throw new CuentaNotFoundException("No se encontró la cuenta con el nro. asociado: " + cuenta.getNroAsociado());
         } catch (DataAccessException e) {
             throw new RuntimeException("Error al actualizar la cuenta con el nro. asociado: " + cuenta.getNroAsociado());
