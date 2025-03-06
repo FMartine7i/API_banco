@@ -1,8 +1,8 @@
 package utn.frbb.tup.DTO;
 
-import utn.frbb.tup.models.Movimiento;
-import utn.frbb.tup.models.TipoMoneda;
-import utn.frbb.tup.models.Transferencia;
+import utn.frbb.tup.model.Movimiento;
+import utn.frbb.tup.model.TipoMoneda;
+import utn.frbb.tup.model.Transferencia;
 
 public class TransferenciaDTO {
     private long origen;

@@ -1,12 +1,12 @@
 package utn.frbb.tup.service;
 import utn.frbb.tup.exceptions.ClienteAlreadyExistsException;
 import utn.frbb.tup.exceptions.ClienteNotFoundException;
-import utn.frbb.tup.models.TipoCuenta;
-import utn.frbb.tup.models.TipoMoneda;
+import utn.frbb.tup.model.TipoCuenta;
+import utn.frbb.tup.model.TipoMoneda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utn.frbb.tup.repository.DAOs.ClienteDAO;
-import utn.frbb.tup.models.Cliente;
+import utn.frbb.tup.repository.DAO.ClienteDAO;
+import utn.frbb.tup.model.Cliente;
 import utn.frbb.tup.DTO.ClienteDTO;
 import utn.frbb.tup.DTO.ClienteRequestDTO;
 import utn.frbb.tup.service.validations.ClienteValidation;

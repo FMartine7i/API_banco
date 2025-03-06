@@ -1,4 +1,4 @@
-package utn.frbb.tup.models;
+package utn.frbb.tup.model;
 
 public enum TipoPersona implements Tipo {
     FISICA("F"), JURIDICA("J");

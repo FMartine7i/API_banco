@@ -1,5 +1,5 @@
 package utn.frbb.tup.DTO;
-import utn.frbb.tup.models.TipoPersona;
+import utn.frbb.tup.model.TipoPersona;
 import java.time.LocalDate;
 
 public class ClienteRequestDTO {

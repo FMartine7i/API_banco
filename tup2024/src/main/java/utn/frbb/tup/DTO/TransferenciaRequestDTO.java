@@ -1,7 +1,6 @@
 package utn.frbb.tup.DTO;
 
-import utn.frbb.tup.models.TipoMoneda;
-import utn.frbb.tup.models.Transferencia;
+import utn.frbb.tup.model.TipoMoneda;
 
 public class TransferenciaRequestDTO {
     private long origen;

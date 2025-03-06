@@ -1,6 +1,6 @@
 package utn.frbb.tup.DTO;
-import utn.frbb.tup.models.TipoCuenta;
-import utn.frbb.tup.models.TipoMoneda;
+import utn.frbb.tup.model.TipoCuenta;
+import utn.frbb.tup.model.TipoMoneda;
 
 public class CuentaRequestDTO {
     private long nroAsociado;

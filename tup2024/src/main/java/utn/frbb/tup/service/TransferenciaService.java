@@ -6,12 +6,12 @@ import utn.frbb.tup.DTO.TransferenciaDTO;
 import utn.frbb.tup.exceptions.CuentaNotFoundException;
 import utn.frbb.tup.exceptions.MontoInsuficienteException;
 import utn.frbb.tup.exceptions.TransferenciaFallidaException;
-import utn.frbb.tup.models.Cuenta;
-import utn.frbb.tup.models.Movimiento;
-import utn.frbb.tup.models.TipoMoneda;
-import utn.frbb.tup.models.Transferencia;
-import utn.frbb.tup.repository.DAOs.CuentaDAO;
-import utn.frbb.tup.repository.DAOs.MovimientoDAO;
+import utn.frbb.tup.model.Cuenta;
+import utn.frbb.tup.model.Movimiento;
+import utn.frbb.tup.model.TipoMoneda;
+import utn.frbb.tup.model.Transferencia;
+import utn.frbb.tup.repository.DAO.CuentaDAO;
+import utn.frbb.tup.repository.DAO.MovimientoDAO;
 import utn.frbb.tup.service.validations.TransferenciaValidation;
 import java.time.LocalDateTime;
 
@@ -31,7 +31,7 @@ public class TransferenciaService {
     }
 
     @Transactional
-    public TransferenciaDTO tranferir(long nroOrigen, String descripcion, long nroDestino, TipoMoneda moneda, float monto) {
+    public TransferenciaDTO transferir(long nroOrigen, String descripcion, long nroDestino, TipoMoneda moneda, float monto) {
         Cuenta cuentaOrigen = cuentaDAO.findByAsociado(nroOrigen);
         boolean esExterna = false;
 

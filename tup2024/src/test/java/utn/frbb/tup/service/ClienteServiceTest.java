@@ -11,9 +11,9 @@ import utn.frbb.tup.DTO.ClienteDTO;
 import utn.frbb.tup.DTO.ClienteRequestDTO;
 import utn.frbb.tup.exceptions.ClienteAlreadyExistsException;
 import utn.frbb.tup.exceptions.ClienteNotFoundException;
-import utn.frbb.tup.models.Cliente;
-import utn.frbb.tup.models.TipoPersona;
-import utn.frbb.tup.repository.DAOs.ClienteDAO;
+import utn.frbb.tup.model.Cliente;
+import utn.frbb.tup.model.TipoPersona;
+import utn.frbb.tup.repository.DAO.ClienteDAO;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -72,5 +72,5 @@ public class ClienteServiceTest {
         assertEquals(clienteBuscado.getDni(), cliente.getDni());
     }
 
-    
+
 }

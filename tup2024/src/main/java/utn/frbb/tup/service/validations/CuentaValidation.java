@@ -3,8 +3,8 @@ import org.springframework.stereotype.Component;
 import utn.frbb.tup.DTO.CuentaRequestDTO;
 import utn.frbb.tup.exceptions.CantidadNegativaException;
 import utn.frbb.tup.exceptions.CuentaNotFoundException;
-import utn.frbb.tup.models.TipoCuenta;
-import utn.frbb.tup.models.TipoMoneda;
+import utn.frbb.tup.model.TipoCuenta;
+import utn.frbb.tup.model.TipoMoneda;
 
 @Component
 public class CuentaValidation {

@@ -1,4 +1,4 @@
-package utn.frbb.tup.models;
+package utn.frbb.tup.model;
 
 public enum TipoMoneda implements Tipo {
     PESOS("P"), DOLARES("D");

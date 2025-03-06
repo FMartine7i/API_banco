@@ -7,10 +7,10 @@ import utn.frbb.tup.exceptions.CantidadNegativaException;
 import utn.frbb.tup.exceptions.ClienteNotFoundException;
 import utn.frbb.tup.exceptions.CuentaAlreadyExistsException;
 import utn.frbb.tup.exceptions.CuentaNotFoundException;
-import utn.frbb.tup.models.Cliente;
-import utn.frbb.tup.models.Cuenta;
-import utn.frbb.tup.repository.DAOs.ClienteDAO;
-import utn.frbb.tup.repository.DAOs.CuentaDAO;
+import utn.frbb.tup.model.Cliente;
+import utn.frbb.tup.model.Cuenta;
+import utn.frbb.tup.repository.DAO.ClienteDAO;
+import utn.frbb.tup.repository.DAO.CuentaDAO;
 import utn.frbb.tup.service.validations.CuentaValidation;
 import java.time.LocalDate;
 

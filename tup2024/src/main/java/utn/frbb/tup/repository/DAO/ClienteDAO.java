@@ -1,5 +1,4 @@
-package utn.frbb.tup.repository.DAOs;
-import utn.frbb.tup.exceptions.ClienteAlreadyExistsException;
+package utn.frbb.tup.repository.DAO;
 import utn.frbb.tup.exceptions.ClienteNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +8,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.List;
-import utn.frbb.tup.models.Cliente;
-import utn.frbb.tup.models.TipoPersona;
+import utn.frbb.tup.model.Cliente;
+import utn.frbb.tup.model.TipoPersona;
 
 @Repository
 public class ClienteDAO {

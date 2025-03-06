@@ -1,4 +1,4 @@
-package utn.frbb.tup.models;
+package utn.frbb.tup.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

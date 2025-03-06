@@ -1,8 +1,8 @@
 package utn.frbb.tup.service.validations;
 import org.springframework.stereotype.Component;
 import utn.frbb.tup.exceptions.MonedaNoSoportadaException;
-import utn.frbb.tup.models.Cuenta;
-import utn.frbb.tup.models.TipoMoneda;
+import utn.frbb.tup.model.Cuenta;
+import utn.frbb.tup.model.TipoMoneda;
 
 @Component
 public class TransferenciaValidation {

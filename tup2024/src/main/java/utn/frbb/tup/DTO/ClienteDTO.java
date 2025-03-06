@@ -1,5 +1,5 @@
 package utn.frbb.tup.DTO;
-import utn.frbb.tup.models.Cliente;
+import utn.frbb.tup.model.Cliente;
 
 public class ClienteDTO {
     private String nombre;

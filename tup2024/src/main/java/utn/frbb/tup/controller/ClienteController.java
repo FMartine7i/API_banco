@@ -1,4 +1,4 @@
-package utn.frbb.tup.controllers;
+package utn.frbb.tup.controller;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +23,6 @@ public class ClienteController {
         logger.debug("Agregando cliente...");
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoCliente);
     }
-
-//    @GetMapping
-//    public ResponseEntity<ClienteDTO> obtenerClientes(@Valid @RequestBody ClienteRequestDTO clienteRequest) {
-//
-//    }
 
     @GetMapping("/{dni}")
     public ResponseEntity<ClienteDTO> obtenerClientePorDni(@PathVariable long dni) {

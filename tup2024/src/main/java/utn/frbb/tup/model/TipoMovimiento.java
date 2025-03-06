@@ -1,4 +1,4 @@
-package utn.frbb.tup.models;
+package utn.frbb.tup.model;
 
 public enum TipoMovimiento implements Tipo {
     DEPOSITO("D"), RETIRO("R"), TRANSFERENCIA("T");
