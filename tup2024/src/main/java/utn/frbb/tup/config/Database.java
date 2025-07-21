@@ -1,4 +1,4 @@
-package config;
+package utn.frbb.tup.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +36,7 @@ public class Database {
             return dataSource;
         } catch (Exception e) {
             logger.error("❌ Error al conectar con la base de datos: {}", e.getMessage());
+            System.out.println("Error: no se pudo conectar a la BD.");
             throw new RuntimeException("No se pudo conectar a la BD.");
         }
     }
