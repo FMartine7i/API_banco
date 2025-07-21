@@ -1,32 +1,35 @@
 package utn.frbb.tup.service;
+import utn.frbb.tup.DTO.ClienteUpdateDTO;
 import utn.frbb.tup.exceptions.ClienteAlreadyExistsException;
 import utn.frbb.tup.exceptions.ClienteNotFoundException;
-import utn.frbb.tup.model.TipoCuenta;
-import utn.frbb.tup.model.TipoMoneda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utn.frbb.tup.repository.DAO.ClienteDAO;
 import utn.frbb.tup.model.Cliente;
-import utn.frbb.tup.DTO.ClienteDTO;
+import utn.frbb.tup.DTO.ClienteResponseDTO;
 import utn.frbb.tup.DTO.ClienteRequestDTO;
-import utn.frbb.tup.service.validations.ClienteValidation;
+import utn.frbb.tup.service.validations.ClienteValidator;
+import utn.frbb.tup.service.validations.DniValidator;
 import java.time.LocalDate;
 
 @Service
 public class ClienteService {
     private final ClienteDAO clienteDAO;
-
+    private final ClienteValidator clienteValidation;
+    private final DniValidator dniValidation;
     // constructor
     @Autowired
-    public ClienteService(ClienteDAO clienteDAO) { this.clienteDAO = clienteDAO; }
+    public ClienteService(ClienteDAO clienteDAO, ClienteValidator clienteValidation, DniValidator dniValidation) {
+        this.clienteDAO = clienteDAO;
+        this.clienteValidation = clienteValidation;
+        this.dniValidation = dniValidation;
+    }
 
-    public ClienteDTO agregarCliente(ClienteRequestDTO clienteRequest) {
-        try {
-            clienteDAO.findByDni(clienteRequest.getDni());
-            throw new ClienteAlreadyExistsException("Error: cliente con dni: " + clienteRequest.getDni() + " ya existe.");
-        } catch (ClienteNotFoundException e) {
-            ClienteValidation clienteValidation = new ClienteValidation();
+    public ClienteResponseDTO agregarCliente(ClienteRequestDTO clienteRequest) throws ClienteAlreadyExistsException {
+        Cliente nuevoCliente = clienteDAO.findByDni(clienteRequest.getDni());
+        if (nuevoCliente == null) {
             clienteValidation.validarCliente(clienteRequest);
+            clienteValidation.validarTipoPersona(clienteRequest.getTipoPersona());
 
             Cliente cliente = new Cliente();
             cliente.setNombre(clienteRequest.getNombre());
@@ -37,25 +40,38 @@ public class ClienteService {
             cliente.setBanco(clienteRequest.getBanco());
             cliente.setFechaAlta(LocalDate.now());
             clienteDAO.save(cliente);
-            return new ClienteDTO(cliente);
-        }
+            return new ClienteResponseDTO(cliente);
+        } else throw new ClienteAlreadyExistsException("Error: cliente con dni: " + clienteRequest.getDni() + " ya existe.");
     }
 
-    public ClienteDTO buscarClientePorDNI(long dni) {
-        if (dni <= 0) throw new IllegalArgumentException("Error: no fue ingresado un número positivo.");
-
+    private Cliente getClientePorDni(String dniStr) {
+        long dni = dniValidation.validarDni(dniStr);
         Cliente cliente = clienteDAO.findByDni(dni);
-        if (cliente == null) throw new IllegalArgumentException("Error: el cliente no existe.");
-        return new ClienteDTO(cliente);
+        if (cliente == null) throw new ClienteNotFoundException("Error: el cliente no existe.");
+        return  cliente;
     }
 
-    public void actualizarCliente(long dni) {
-        if (dni <= 0) throw new IllegalArgumentException("Error: No fue ingresado un número positivo.");
-
+    public ClienteResponseDTO buscarClientePorDNI(String dniStr) {
+        Cliente cliente = getClientePorDni(dniStr);
+        return new ClienteResponseDTO(cliente);
     }
 
-    public boolean tieneCuenta(long dni, TipoCuenta tipoCuenta, TipoMoneda tipoMoneda) {
-        Cliente cliente = clienteDAO.findByDni(dni);
-        return cliente.getCuentas().stream().anyMatch(c -> c.getTipoCuenta().equals(tipoCuenta) && c.getTipoMoneda().equals(tipoMoneda));
+    public ClienteUpdateDTO actualizarCliente(String dniStr, ClienteUpdateDTO clienteRequestDTO) {
+        clienteValidation.validarCliente(clienteRequestDTO);
+        clienteValidation.validarTipoPersona(clienteRequestDTO.getTipoPersona());
+
+        Cliente cliente = getClientePorDni(dniStr);
+        cliente.setNombre(clienteRequestDTO.getNombre());
+        cliente.setApellido(clienteRequestDTO.getApellido());
+        cliente.setBanco(clienteRequestDTO.getBanco());
+        cliente.setFechaNacimiento(clienteRequestDTO.getFechaNacimiento());
+        cliente.setTipoPersona(clienteRequestDTO.getTipoPersona());
+        clienteDAO.update(cliente);
+        return new ClienteUpdateDTO(cliente);
+    }
+
+    public void eliminarCliente(String dniStr) {
+        Cliente cliente = getClientePorDni(dniStr);
+        clienteDAO.delete(cliente.getDni());
     }
 }
