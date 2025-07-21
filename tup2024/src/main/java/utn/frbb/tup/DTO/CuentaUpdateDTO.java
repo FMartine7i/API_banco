@@ -1,19 +1,19 @@
 package utn.frbb.tup.DTO;
+import utn.frbb.tup.model.Cuenta;
 import utn.frbb.tup.model.TipoCuenta;
 import utn.frbb.tup.model.TipoMoneda;
 
-public class CuentaRequestDTO implements CuentaDTO {
+public class CuentaUpdateDTO implements CuentaDTO {
     private TipoCuenta tipoCuenta;
     private TipoMoneda tipoMoneda;
     private float saldo;
 
-    // constructor
-    public CuentaRequestDTO() {}
+    public CuentaUpdateDTO() {}
 
-    public CuentaRequestDTO(TipoCuenta tipoCuenta, TipoMoneda tipoMoneda, float saldo) {
-        this.tipoCuenta = tipoCuenta;
-        this.tipoMoneda = tipoMoneda;
-        this.saldo = saldo;
+    public CuentaUpdateDTO(Cuenta cuenta) {
+        this.tipoCuenta = cuenta.getTipoCuenta();
+        this.tipoMoneda = cuenta.getTipoMoneda();
+        this.saldo = cuenta.getSaldo();
     }
     // getters
     public TipoCuenta getTipoCuenta() { return tipoCuenta; }

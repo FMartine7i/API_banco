@@ -1,14 +1,13 @@
 package utn.frbb.tup.DTO;
-
 import utn.frbb.tup.model.Movimiento;
 import utn.frbb.tup.model.TipoMoneda;
 import utn.frbb.tup.model.Transferencia;
 
 public class TransferenciaDTO {
-    private long origen;
-    private long destino;
-    private TipoMoneda tipoMoneda;
-    private float monto;
+    private final long origen;
+    private final long destino;
+    private final TipoMoneda tipoMoneda;
+    private final float monto;
 
     public TransferenciaDTO(Movimiento movimiento) {
         this.origen = movimiento.getOrigen();
@@ -21,9 +20,4 @@ public class TransferenciaDTO {
     public long getDestino() { return destino; }
     public TipoMoneda getTipoMoneda() { return tipoMoneda; }
     public float getMonto() { return monto; }
-    // setters
-    public void setOrigen(long origen) { this.origen = origen; }
-    public void setDestino(long destino) { this.destino = destino; }
-    public void setTipoMoneda(TipoMoneda tipoMoneda) { this.tipoMoneda = tipoMoneda; }
-    public void setMonto(float monto) { this.monto = monto; }
 }
