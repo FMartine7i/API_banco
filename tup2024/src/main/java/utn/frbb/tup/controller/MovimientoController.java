@@ -7,19 +7,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import utn.frbb.tup.DTO.MovimientoRequestDTO;
+import utn.frbb.tup.DTO.MovimientoResponseDTO;
 import utn.frbb.tup.DTO.TransferenciaRequestDTO;
-import utn.frbb.tup.DTO.TransferenciaResponse;
+import utn.frbb.tup.DTO.TransferenciaResponseDTO;
 import utn.frbb.tup.exceptions.TransferenciaFallidaException;
 import utn.frbb.tup.model.Movimiento;
 import utn.frbb.tup.service.MovimientoService;
 import utn.frbb.tup.service.TransferenciaService;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
-@RequestMapping("api/v1/movimientos")
+@RequestMapping("api/v1/cuentas/")
 public class MovimientoController {
     private static final Logger logger = LoggerFactory.getLogger(ClienteController.class);
     private final TransferenciaService transferenciaService;
@@ -31,33 +30,33 @@ public class MovimientoController {
         this.movimientoService = movimientoService;
     }
 
-    @GetMapping("/historial/{nro}")
-    public ResponseEntity<Map<String, Object>> verHistorial(@PathVariable long nro) {
+    @GetMapping("{nro}/historial")
+    public ResponseEntity<Map<String, Object>> verHistorial(@PathVariable String nro) {
         Map<String, Object> movimientos = movimientoService.obtenerMovimientos(nro);
         logger.debug("Buscando historial...");
         return ResponseEntity.ok(movimientos);
     }
 
-    @PostMapping("/transferir")
-    public ResponseEntity<TransferenciaResponse> realizarTransferencia(@Valid @RequestBody TransferenciaRequestDTO transferenciaRequest) {
+    @PostMapping("{nro}/transferir")
+    public ResponseEntity<TransferenciaResponseDTO> realizarTransferencia(@PathVariable String nro, @Valid @RequestBody TransferenciaRequestDTO transferenciaRequest) {
         logger.debug("Emitiendo transferencia...");
         try {
-            transferenciaService.transferir(transferenciaRequest.getOrigen(), transferenciaRequest.getDescripcion(), transferenciaRequest.getDestino(), transferenciaRequest.getTipoMoneda(), transferenciaRequest.getMonto());
-            return ResponseEntity.status(HttpStatus.CREATED).body(new TransferenciaResponse("EXITOSA", "Transferencia exitosa."));
+            transferenciaService.transferir(nro, transferenciaRequest.getDescripcion(), transferenciaRequest.getDestino(), transferenciaRequest.getMonto());
+            return ResponseEntity.status(HttpStatus.CREATED).body(new TransferenciaResponseDTO("EXITOSA", "Transferencia exitosa."));
         } catch (TransferenciaFallidaException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new TransferenciaResponse("FALLIDA", "Transferencia fallida."));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new TransferenciaResponseDTO("FALLIDA", "Transferencia fallida."));
         }
     }
 
-    @PostMapping("/depositar")
-    public ResponseEntity<Movimiento> depositar(@Valid @RequestBody MovimientoRequestDTO movimientoRequest) {
-        Movimiento movimiento = movimientoService.depositar(movimientoRequest);
+    @PostMapping("{nro}/depositar")
+    public ResponseEntity<MovimientoResponseDTO> depositar(@PathVariable String nro, @Valid @RequestBody MovimientoRequestDTO movimientoRequest) {
+        MovimientoResponseDTO movimiento = movimientoService.depositar(nro, movimientoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(movimiento);
     }
 
-    @PostMapping("/retirar")
-    public ResponseEntity<Movimiento> retirar(@Valid @RequestBody MovimientoRequestDTO movimientoRequest) {
-        Movimiento movimiento = movimientoService.retirar(movimientoRequest);
+    @PostMapping("{nro}/retirar")
+    public ResponseEntity<MovimientoResponseDTO> retirar(@PathVariable String nro, @Valid @RequestBody MovimientoRequestDTO movimientoRequest) {
+        MovimientoResponseDTO movimiento = movimientoService.retirar(nro, movimientoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(movimiento);
     }
 }
