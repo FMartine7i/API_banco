@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import utn.frbb.tup.model.Movimiento;
 import utn.frbb.tup.model.TipoMovimiento;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.List;
 

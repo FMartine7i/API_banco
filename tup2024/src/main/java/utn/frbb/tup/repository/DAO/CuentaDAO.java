@@ -23,8 +23,11 @@ public class CuentaDAO {
     @Autowired
     public CuentaDAO(JdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
 
-    public List<Cuenta> getCuentas() {
-        return jdbcTemplate.query(joinQuery, this::mapRowToCuenta);
+    public List<Cuenta> getAllCuentasByDNI(long dni) {
+        String sqlQuery = joinQuery + " WHERE cl.dni = ?";
+
+        List<Cuenta> cuentas = jdbcTemplate.query(sqlQuery, this::mapRowToCuenta, dni);
+        return cuentas.isEmpty() ? null : cuentas;
     }
 
     public Cuenta findByAsociado(long nroAsociado) {
@@ -51,16 +54,16 @@ public class CuentaDAO {
     }
 
     public void update(Cuenta cuenta) {
-        String sqlQuery = "UPDATE CUENTAS SET saldo = ?";
+        String sqlQuery = "UPDATE CUENTAS SET tipo = ?, tipo_moneda = ?, saldo = ? WHERE nro_asociado = ?";
         try {
-            int rowsAffected = jdbcTemplate.update(sqlQuery, cuenta.getSaldo());
+            int rowsAffected = jdbcTemplate.update(sqlQuery, cuenta.getTipoCuenta().getDescripcion(), cuenta.getTipoMoneda().getDescripcion(), cuenta.getSaldo(), cuenta.getNroAsociado());
             if (rowsAffected == 0) throw new CuentaNotFoundException("No se encontró la cuenta con el nro. asociado: " + cuenta.getNroAsociado());
         } catch (DataAccessException e) {
             throw new RuntimeException("Error al actualizar la cuenta con el nro. asociado: " + cuenta.getNroAsociado());
         }
     }
 
-    public void delete(int nroAsociado) {
+    public void delete(long nroAsociado) {
         String sqlQuery = "DELETE FROM CUENTAS WHERE nro_asociado = ?";
         int rowsAffected = jdbcTemplate.update(sqlQuery, nroAsociado);
         logger.debug("CuentaService eliminada con éxito de la tabla.");

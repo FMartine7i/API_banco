@@ -51,7 +51,7 @@ public class ClienteDAO {
                 return cliente;
             }, dni);
         } catch (EmptyResultDataAccessException e) {
-            throw new ClienteNotFoundException("Error: no se encontró al cliente con la ID: " + dni);
+            return null;
         }
     }
 
@@ -74,7 +74,7 @@ public class ClienteDAO {
     }
 
     public void update(Cliente cliente) {
-        String sqlQuery = "UPDATE CLIENTES SET nombre = ?, apellido = ?, dni = ?, fecha_nacimiento = ?, tipo = ?, banco = ?, alta = ? WHERE id = ?";
+        String sqlQuery = "UPDATE CLIENTES SET nombre = ?, apellido = ?, fecha_nacimiento = ?, tipo = ?, banco = ? WHERE dni = ?";
         try {
             int rowsAffected = jdbcTemplate.update(sqlQuery,
                 cliente.getNombre(),
