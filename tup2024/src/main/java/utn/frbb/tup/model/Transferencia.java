@@ -1,5 +1,4 @@
 package utn.frbb.tup.model;
-
 import java.time.LocalDateTime;
 
 public class Transferencia extends Movimiento {

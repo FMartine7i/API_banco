@@ -2,11 +2,11 @@ package utn.frbb.tup.model;
 
 public enum TipoMovimiento implements Tipo {
     DEPOSITO("D"), RETIRO("R"), TRANSFERENCIA("T");
-    private String descripcion;
+    private final String descripcion;
 
     TipoMovimiento(String descripcion) { this.descripcion = descripcion; }
     // getter
-
+    @Override
     public String getDescripcion () { return descripcion; }
     // implementación específica de 'fromString' para TipoMovimiento
     public static TipoMovimiento fromString(String descripcion) {
